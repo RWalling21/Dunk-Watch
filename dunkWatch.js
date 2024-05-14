@@ -1,16 +1,15 @@
 const axios = require('axios');
 const moment = require('moment-timezone');
 
-const currDate = moment().tz('America/New_York').format('YYYY-MM-DD');
-
 class dunkWatchAPI  {
     /**
      * @description Basic API for ease of development. Based off of balldontliejs, https://github.com/blockchaincavs/balldontliejs
-     * @param {*} API_KEY 
+     * @param {*} API_KEY ballDontLie API key - https://app.balldontlie.io/
+     * @param {*} timeZone [optional]
      */
-    constructor(API_KEY=null) {
+    constructor(API_KEY=null, timeZone='America/New_York') {
         this.API_BASE_URL = 'https://api.balldontlie.io/v1/';
-
+        this.currDate = moment().tz(timeZone).format('YYYY-MM-DD');
         this.apiInstance = axios.create({
             baseURL: this.API_BASE_URL, headers: {Authorization: API_KEY}
         });
@@ -50,7 +49,7 @@ class dunkWatchAPI  {
      * @returns {Promise<void>} - A promise that resolves when the stats have been fetched and logged.
      * @throws {Error} - Throws an error if there is an issue with the API request.
      */
-    async fetchStats(per_page=25, start_date=currDate, end_date=currDate) {
+    async fetchStats(per_page=25, start_date=this.currDate, end_date=this.currDate) {
         const endpoint = 'stats'
         const params = { cursor: 0, per_page, start_date, end_date };
 
@@ -78,7 +77,7 @@ class dunkWatchAPI  {
      * @returns {Promise<void>} - A promise that resolves when the stats have been fetched and logged.
      * @throws {Error} - Throws an error if there is an issue with the API request.
      */
-    async fetchGames(per_page=25, start_date=currDate, end_date=currDate) {
+    async fetchGames(per_page=25, start_date=this.currDate, end_date=this.currDate) {
         const endpoint = 'games'
         const params = { cursor: 0, per_page, start_date, end_date };
 
