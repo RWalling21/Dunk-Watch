@@ -1,14 +1,17 @@
 const axios = require('axios');
 require('dotenv').config();
 
-const today = new Date();
+const today = new Date().toISOString().slice(0, 10);
 
 async function fetchBasketballStats() {
     try {
         const response = await axios.get('https://api.balldontlie.io/v1/stats', {
             headers: {
-                'Authorization': `${process.env.API_KEY}`,
-                'dates': `${today}`
+                'Authorization': process.env.API_KEY,
+            },
+            params: {
+                'start_date': today,
+                'end_date': today,
             }
         });
         const stats = response.data.data;
@@ -31,14 +34,15 @@ async function fetchBasketballGames() {
     try {
         const response = await axios.get("https://api.balldontlie.io/v1/games", {
             headers: {
-                'Authorization': `${process.env.API_KEY}`,
-                'dates': `${today}`
+                'Authorization': process.env.API_KEY,
+            },
+            params: {
+                'start_date': today,
+                'end_date': today,
             }
         });
 
         const games = response.data.data;
-
-        console.log(games)
 
         games.forEach(game => {
             console.log(`Home Team: ${game.home_team.name}`);
@@ -65,4 +69,4 @@ async function fetchBasketballTeams() {
     }
 }
 
-fetchBasketballTeams();
+fetchBasketballGames();
