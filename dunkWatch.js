@@ -12,7 +12,7 @@ class dunkWatchAPI  {
         this.API_BASE_URL = 'https://api.balldontlie.io/v1/';
 
         this.apiInstance = axios.create({
-        baseURL: this.API_BASE_URL, headers: {Authorization: API_KEY}
+            baseURL: this.API_BASE_URL, headers: {Authorization: API_KEY}
         });
     }
 
@@ -86,8 +86,8 @@ class dunkWatchAPI  {
 
         if (games && games.length > 0) {
             games.forEach(game => {
-                console.log(`Home Team: ${game.home_team.name}`);
-                console.log(`Away Team: ${game.visitor_team.name}`);
+                console.log(`Home Team: ${game.home_team.city} ${game.home_team.name} - ${game.home_team_score}`);
+                console.log(`Away Team: ${game.visitor_team.city} ${game.visitor_team.name} - ${game.visitor_team_score}`);
                 console.log('---------------------------');
             })
         } else {
