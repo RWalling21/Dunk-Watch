@@ -1,6 +1,6 @@
 require('dotenv').config();
-const StatApi = require("./statapi.js");
+const DunkWatchAPI = require("./dunkWatch.js");
 
-const statApi = new StatApi();
+const dunkWatchAPI = new DunkWatchAPI(process.env.API_KEY);
 
-statApi.fetchBasketballStats();
+dunkWatchAPI.fetchGameStats();
