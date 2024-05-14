@@ -30,13 +30,13 @@ class dunkWatchAPI  {
      * @returns {Promise<Object>} - The API response data.
      * @throws {Error} - Throws an error if there is an issue with the API request.
      */
-    async handleAPIRequest(endpoint, params = {}) {
+    async handleRequest(endpoint, params = {}) {
         try {
             const response = await this.apiInstance.get(endpoint, { params });
             return response.data.data;
         } catch (error) {
             console.error(`Error fetching data from ${endpoint}:`, error);
-            throw error;
+            return null;
         }
     }
 
@@ -53,7 +53,7 @@ class dunkWatchAPI  {
         const endpoint = 'stats'
         const params = { cursor: 0, per_page, start_date, end_date };
 
-        const stats = await this.handleAPIRequest(endpoint, params)
+        const stats = await this.handleRequest(endpoint, params)
         
         if (stats && stats.length > 0) {
             stats.forEach(stat => {
@@ -81,7 +81,7 @@ class dunkWatchAPI  {
         const endpoint = 'games'
         const params = { cursor: 0, per_page, start_date, end_date };
 
-        const games = await this.handleAPIRequest(endpoint, params)
+        const games = await this.handleRequest(endpoint, params)
 
         if (games && games.length > 0) {
             games.forEach(game => {
@@ -103,7 +103,7 @@ class dunkWatchAPI  {
     async fetchTeams() {
         const endpoint = 'teams';
 
-        const teams = this.handleAPIRequest(endpoint)
+        const teams = this.handleRequest(endpoint)
 
         if (teams && teams.length > 0) {
             teams.forEach(team => {
