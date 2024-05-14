@@ -1,7 +1,8 @@
 const axios = require('axios');
+const moment = require('moment-timezone');
 require('dotenv').config();
 
-const today = new Date().toISOString().slice(0, 10);
+const currDate = moment().tz('America/New_York').format('YYYY-MM-DD');
 
 async function fetchBasketballStats() {
     try {
@@ -10,13 +11,12 @@ async function fetchBasketballStats() {
                 'Authorization': process.env.API_KEY,
             },
             params: {
-                'start_date': today,
-                'end_date': today,
+                'start_date': currDate,
+                'end_date': currDate,
             }
         });
-        const stats = response.data.data;
 
-        console.log(stats)
+        const stats = response.data.data;
         
         stats.forEach(stat => {
             console.log(`Player: ${stat.player.first_name} ${stat.player.last_name}`);
@@ -37,8 +37,8 @@ async function fetchBasketballGames() {
                 'Authorization': process.env.API_KEY,
             },
             params: {
-                'start_date': today,
-                'end_date': today,
+                'start_date': currDate,
+                'end_date': currDate,
             }
         });
 
@@ -49,7 +49,7 @@ async function fetchBasketballGames() {
             console.log(`Away Team: ${game.visitor_team.name}`);
         })
     } catch (error) {
-        console.error('Error fetching games: ', error)
+        console.error('Error fetching games: ', error);
     }
 }
 
@@ -69,4 +69,6 @@ async function fetchBasketballTeams() {
     }
 }
 
-fetchBasketballGames();
+fetchBasketballStats();
+//fetchBasketballGames();
+//fetchBasketballTeams()
