@@ -69,7 +69,7 @@ class dunkWatchAPI  {
      * 
      * @throws {Error} - Throws an error if there is an issue with the API request.
      */
-    async fetchGames() {
+    async fetchGames(per_page=25, start_date=currDate, end_date=currDate) {
         try {
             const endpoint = 'games'
             const params = { cursor: 0, per_page, start_date, end_date };
@@ -82,6 +82,7 @@ class dunkWatchAPI  {
                 games.forEach(game => {
                     console.log(`Home Team: ${game.home_team.name}`);
                     console.log(`Away Team: ${game.visitor_team.name}`);
+                    console.log('---------------------------');
                 })
             } else {
                 console.log('No games available for the given date range.');
@@ -91,19 +92,31 @@ class dunkWatchAPI  {
         }
     }
     
-    async fetchBasketballTeams() {
+    /**
+     * Fetches basketball teams and logs their information
+     * 
+     * @returns {Promise<void>} - A promise that resolves when the teams have been fetched and logged.
+     * 
+     * @throws {Error} - Throws an error if there is an issue with the API request.
+     */
+    async fetchTeams() {
         try {
-            const response = await axios.get('https://api.balldontlie.io/v1/teams', {
-                headers: {
-                    'Authorization': `${process.env.API_KEY}`,
-                }
-            });
-    
+            const endpoint = 'teams';
+            const response = await this.apiInstance.get(endpoint);
+
             const teams = response.data.data;
-    
-            console.log(teams);
+
+            if (teams && teams.length > 0) {
+                teams.forEach(team => {
+                    console.log(`Team Name: ${team.full_name}`);
+                    console.log(`City: ${team.city}`);
+                    console.log('---------------------------');
+                });
+            } else {
+                console.log('No teams available.');
+            }
         } catch (error) {
-            console.error('Error fetching teams: ', error)
+            console.error('Error fetching teams: ', error);
         }
     }
 }
