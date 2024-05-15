@@ -42,16 +42,17 @@ class dunkWatchAPI  {
      * @returns {Promise<void>} - A promise that resolves when the teams have been fetched and logged.
      * @throws {Error} - Throws an error if there is an issue with the API request.
      */
-    async currentScore() {
+    async fetchScoreboard() {
+        // Pull current scoreboard data from nba.com
         const endpoint = "https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json";
 
-        const request = await this.apiInstance.get(endpoint);
-        const scoreboard = request.data.scoreboard;
-
-        console.log(scoreboard);
+        const response = await this.apiInstance.get(endpoint);
+        
+        return scoreboard = response.data.scoreboard;
     }
 
     // Format Scoreboard method 
+    
 }
 
 module.exports = dunkWatchAPI;
