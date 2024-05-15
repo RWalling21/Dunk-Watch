@@ -1,6 +1,5 @@
 const axios = require('axios');
 const moment = require('moment-timezone');
-const ScrapeScores = require('./scraper.js');
 
 class dunkWatchAPI  {
     /**
@@ -116,17 +115,12 @@ class dunkWatchAPI  {
     }
 
     async currentScore() {
-        const scores = await ScrapeScores();
+        const endpoint = "https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json";
 
-        if (scores && scores.length > 0) {
-            scores.forEach(score => {
-                console.log(`Home Team: ${score.team1} - ${score.score1}`);
-                console.log(`Away Team: ${score.team2} - ${score.score2}`);
-                console.log('---------------------------');
-            });
-        } else {
-            console.log('No scores available.');
-        }
+        const api = axios.create();
+        const scores = await api.get(endpoint);
+
+        console.log(scores.data.scoreboard)
     }
 }
 
