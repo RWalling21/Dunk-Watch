@@ -1,5 +1,6 @@
 const axios = require('axios');
 const moment = require('moment-timezone');
+const ScrapeScores = require('./scraper.js');
 
 class dunkWatchAPI  {
     /**
@@ -101,8 +102,6 @@ class dunkWatchAPI  {
      * @throws {Error} - Throws an error if there is an issue with the API request.
      */
     async fetchTeams() {
-        const endpoint = 'teams';
-
         const teams = this.handleRequest(endpoint)
 
         if (teams && teams.length > 0) {
@@ -113,6 +112,18 @@ class dunkWatchAPI  {
             });
         } else {
             console.log('No teams available.');
+        }
+    }
+
+    async currentScore() {
+        const scores = ScrapeScores();
+
+        console.log(scores)
+
+        if (scores && scores.length > 0) {
+            console.log(`Home Team: ${scores.team1} - ${scores.score1}`);
+            console.log(`Away Team: ${scores.team2} - ${scores.score2}`);
+            console.log('---------------------------');
         }
     }
 }
