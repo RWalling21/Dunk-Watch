@@ -48,11 +48,35 @@ class dunkWatchAPI  {
 
         const response = await this.apiInstance.get(endpoint);
         
-        return scoreboard = response.data.scoreboard;
+        return response.data.scoreboard;
     }
 
     // Format Scoreboard method 
-    
+    async formatScoreboard() {
+        const scoreboard = await this.fetchScoreboard();
+        const games = scoreboard.games;
+        
+        games.forEach(game => {
+          const homeTeam = game.homeTeam.teamName;
+          const homeScore = game.homeTeam.score;
+          const awayTeam = game.awayTeam.teamName;
+          const awayScore = game.awayTeam.score;
+          const gameStatus = game.gameStatus;
+          const gameStatusText = game.gameStatusText;
+      
+          if (gameStatus === 2) {
+            // Log games in progress
+            console.log(`${homeTeam} vs ${awayTeam}`);
+            console.log(`Current Score: ${homeTeam} ${homeScore} - ${awayTeam} ${awayScore}`);
+            console.log(`Status: ${gameStatusText}`);
+          } else {
+            // Log games not in progress
+            console.log(`${homeTeam} vs ${awayTeam}`);
+            console.log(`Scheduled Start: ${gameStatusText}`);
+          }
+          console.log('---------------------------');
+        });
+      }
 }
 
 module.exports = dunkWatchAPI;
