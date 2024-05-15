@@ -3,16 +3,12 @@ const moment = require('moment-timezone');
 
 class dunkWatchAPI  {
     /**
-     * @description Basic API for ease of development. Based off of balldontliejs, https://github.com/blockchaincavs/balldontliejs
-     * @param {*} API_KEY ballDontLie API key - https://app.balldontlie.io/
-     * @param {*} timeZone [optional]
+     * @description API Object to fetch live NBA data
+     * @param {*} timeZone [optional] timezone that games are fetched from
      */
-    constructor(API_KEY=null, timeZone='America/New_York') {
-        this.API_BASE_URL = 'https://api.balldontlie.io/v1/';
+    constructor(timeZone='America/New_York') {
         this.currDate = moment().tz(timeZone).format('YYYY-MM-DD');
-        this.apiInstance = axios.create({
-            baseURL: this.API_BASE_URL, headers: {Authorization: API_KEY}
-        });
+        this.apiInstance = axios.create({});
     }
 
     /**
@@ -33,7 +29,7 @@ class dunkWatchAPI  {
     async handleRequest(endpoint, params = {}) {
         try {
             const response = await this.apiInstance.get(endpoint, { params });
-            return response.data.data;
+            return response;
         } catch (error) {
             console.error(`Error fetching data from ${endpoint}:`, error);
             return null;
@@ -41,87 +37,21 @@ class dunkWatchAPI  {
     }
 
     /**
-     * Fetches player stats for the given date range
-     * 
-     * @param {number} [per_page=25] - The number of results to retrieve per page.
-     * @param {string} [start_date=currDate] - The start date for the stats retrieval in YYYY-MM-DD format.
-     * @param {string} [end_date=currDate] - The end date for the stats retrieval in YYYY-MM-DD format.
-     * @returns {Promise<void>} - A promise that resolves when the stats have been fetched and logged.
-     * @throws {Error} - Throws an error if there is an issue with the API request.
-     */
-    async fetchStats(per_page=25, start_date=this.currDate, end_date=this.currDate) {
-        const endpoint = 'stats'
-        const params = { cursor: 0, per_page, start_date, end_date };
-
-        const stats = await this.handleRequest(endpoint, params);
-        
-        if (stats && stats.length > 0) {
-            stats.forEach(stat => {
-                console.log(`Player: ${stat.player.first_name} ${stat.player.last_name}`);
-                console.log(`Points: ${stat.pts}`);
-                console.log(`Rebounds: ${stat.reb}`);
-                console.log(`Assists: ${stat.ast}`);
-                console.log('---------------------------');
-            });
-        } else {
-            console.log('No stats available for the given date range.');
-        }
-    }
-    
-    /**
-     * Fetches games for the given date range
-     * 
-     * @param {number} [per_page=25] - The number of results to retrieve per page.
-     * @param {string} [start_date=currDate] - The start date for the stats retrieval in YYYY-MM-DD format.
-     * @param {string} [end_date=currDate] - The end date for the stats retrieval in YYYY-MM-DD format.
-     * @returns {Promise<void>} - A promise that resolves when the stats have been fetched and logged.
-     * @throws {Error} - Throws an error if there is an issue with the API request.
-     */
-    async fetchGames(per_page=25, start_date=this.currDate, end_date=this.currDate) {
-        const endpoint = 'games'
-        const params = { cursor: 0, per_page, start_date, end_date };
-
-        const games = await this.handleRequest(endpoint, params);
-
-        if (games && games.length > 0) {
-            games.forEach(game => {
-                console.log(`Home Team: ${game.home_team.city} ${game.home_team.name} - ${game.home_team_score}`);
-                console.log(`Away Team: ${game.visitor_team.city} ${game.visitor_team.name} - ${game.visitor_team_score}`);
-                console.log('---------------------------');
-            })
-        } else {
-            console.log('No games available for the given date range.');
-        }
-    }
-    
-    /**
-     * Fetches basketball teams and logs their information
+     * Fetches current games and their score
      * 
      * @returns {Promise<void>} - A promise that resolves when the teams have been fetched and logged.
      * @throws {Error} - Throws an error if there is an issue with the API request.
      */
-    async fetchTeams() {
-        const teams = await this.handleRequest(endpoint);
-
-        if (teams && teams.length > 0) {
-            teams.forEach(team => {
-                console.log(`Team Name: ${team.full_name}`);
-                console.log(`City: ${team.city}`);
-                console.log('---------------------------');
-            });
-        } else {
-            console.log('No teams available.');
-        }
-    }
-
     async currentScore() {
         const endpoint = "https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json";
 
-        const api = axios.create();
-        const scores = await api.get(endpoint);
+        const request = await this.apiInstance.get(endpoint);
+        const scoreboard = request.data.scoreboard;
 
-        console.log(scores.data.scoreboard)
+        console.log(scoreboard);
     }
+
+    // Format Scoreboard method 
 }
 
 module.exports = dunkWatchAPI;

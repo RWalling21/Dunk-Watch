@@ -1,6 +1,7 @@
 # DunkWatchAPI
 
-DunkWatchAPI is a CLI tool for checking current NBA game scores, player stats, and team information using the [Ball Don't Lie API](https://www.balldontlie.io/#introduction). This tool is still in early development, more to come soon.
+Dunk Watch provides real time NBA Scores and team standings directly in your command line interface. 
+Dunk Watch prides itself on not relying on expensive external API's while still delivering game stats in real time. 
 
 ## Installation
 
@@ -15,20 +16,18 @@ DunkWatchAPI is a CLI tool for checking current NBA game scores, player stats, a
     npm install
     ```
 
-3. Create a `.env` file in the root directory and add your API key:
-    ```env
-    API_KEY=your_api_key_here
-    ```
+Simple as that! 
 
 ## Usage
 
+Currently Dunk Watch is in early alpha and acts as an API. Soon Dunk Watch will be updated as a easy to use command line tool. Please check back for updates! 
+
 ### Fetch Current Games
 
-Fetch player stats for a specified date range:
+Fetch games today with real time scores
 
 ```javascript
-const DunkWatchAPI = require('./dunkWatchAPI');
-const dunkWatchAPI = new DunkWatchAPI(process.env.API_KEY);
+const DunkWatchAPI = require('./dunkWatch.js');
+const dunkWatchAPI = new DunkWatchAPI();
 
-// By default the start_date and end_date are set to today's date (EST)
-dunkWatchAPI.fetchGames();
+dunkWatchAPI.currentScore();
