@@ -54,7 +54,7 @@ class dunkWatchAPI  {
         const endpoint = 'stats'
         const params = { cursor: 0, per_page, start_date, end_date };
 
-        const stats = await this.handleRequest(endpoint, params)
+        const stats = await this.handleRequest(endpoint, params);
         
         if (stats && stats.length > 0) {
             stats.forEach(stat => {
@@ -82,7 +82,7 @@ class dunkWatchAPI  {
         const endpoint = 'games'
         const params = { cursor: 0, per_page, start_date, end_date };
 
-        const games = await this.handleRequest(endpoint, params)
+        const games = await this.handleRequest(endpoint, params);
 
         if (games && games.length > 0) {
             games.forEach(game => {
@@ -102,7 +102,7 @@ class dunkWatchAPI  {
      * @throws {Error} - Throws an error if there is an issue with the API request.
      */
     async fetchTeams() {
-        const teams = this.handleRequest(endpoint)
+        const teams = await this.handleRequest(endpoint);
 
         if (teams && teams.length > 0) {
             teams.forEach(team => {
@@ -116,14 +116,16 @@ class dunkWatchAPI  {
     }
 
     async currentScore() {
-        const scores = ScrapeScores();
-
-        console.log(scores)
+        const scores = await ScrapeScores();
 
         if (scores && scores.length > 0) {
-            console.log(`Home Team: ${scores.team1} - ${scores.score1}`);
-            console.log(`Away Team: ${scores.team2} - ${scores.score2}`);
-            console.log('---------------------------');
+            scores.forEach(score => {
+                console.log(`Home Team: ${score.team1} - ${score.score1}`);
+                console.log(`Away Team: ${score.team2} - ${score.score2}`);
+                console.log('---------------------------');
+            });
+        } else {
+            console.log('No scores available.');
         }
     }
 }

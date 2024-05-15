@@ -18,25 +18,26 @@ async function scrapeScores() {
     // Extract game scores
     const gameScores = await page.evaluate(() => {
         const games = document.querySelectorAll('.GameCard_gcm__SKtfh');
-
-        const data = Array.from(games).map(game => {
-            const teamElements = game.querySelectorAll('.MatchupCardTeamName_teamName__9YaBA');
-            const scoreElements = game.querySelectorAll('.GameCardMatchup_matchupScoreCard__owb6w');
-
-            if (teamElements.length === 2 && scoreElements.length === 2) {
-                return {
-                team1: teamElements[0].innerText.trim(),
-                team2: teamElements[1].innerText.trim(),
-                score1: scoreElements[0].innerText.trim(),
-                score2: scoreElements[1].innerText.trim(),
-                };
-            }
-            // Don't return null games
-            return null;
-        }).filter(game => game !== null);
-
+        const data = [];
+    
+        games.forEach(game => {
+          const teamElements = game.querySelectorAll('.MatchupCardTeamName_teamName__9YaBA');
+          const scoreElements = game.querySelectorAll('.GameCardMatchup_matchupScoreCard__owb6w');
+    
+          // Ensure both teams and scores are present
+          if (teamElements.length === 2 && scoreElements.length === 2) {
+            const gameData = {
+              team1: teamElements[0].innerText.trim(),
+              team2: teamElements[1].innerText.trim(),
+              score1: scoreElements[0].innerText.trim(),
+              score2: scoreElements[1].innerText.trim(),
+            };
+            data.push(gameData);
+          }
+        });
+    
         return data;
-    });
+      });
 
     await browser.close();
     return gameScores;
