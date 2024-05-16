@@ -44,7 +44,7 @@ class dunkWatchAPI  {
      */
     async fetchScoreboard() {
         // Pull current scoreboard data from nba.com
-        const endpoint = "https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json";
+        const endpoint = 'https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json';
 
         const response = await this.apiInstance.get(endpoint);
         
@@ -52,7 +52,7 @@ class dunkWatchAPI  {
     }
 
     /**
-     * Fetches the current scoreboard data and formats it for display.
+     * Prints a formatted scoreboard to the command line.
      */
     async printScoreboard() {
         const scoreboard = await this.fetchScoreboard();
@@ -69,7 +69,7 @@ class dunkWatchAPI  {
             const gameStatusText = game.gameStatusText;
             const series = game.seriesText;
 
-            const periods = {1: "1st", 2: "2nd", 3: "3rd", 4: "4th"}
+            const periods = {1: '1st', 2: '2nd', 3: '3rd', 4: '4th'}
             const period = game.period;
 
             if (gameStatus === 1) {
