@@ -39,7 +39,7 @@ class dunkWatchAPI  {
     /**
      * Fetches current games and their score
      * 
-     * @returns {Promise<void>} - A promise that resolves when the teams have been fetched and logged.
+     * @returns {JSON} - Returns the scoreboard object in JSON format
      * @throws {Error} - Throws an error if there is an issue with the API request.
      */
     async fetchScoreboard() {
@@ -54,7 +54,7 @@ class dunkWatchAPI  {
     /**
      * Fetches the current scoreboard data and formats it for display.
      */
-    async formatScoreboard() {
+    async printScoreboard() {
         const scoreboard = await this.fetchScoreboard();
         const games = scoreboard.games;
         
@@ -65,14 +65,23 @@ class dunkWatchAPI  {
             const awayScore = game.awayTeam.score;
             const gameStatus = game.gameStatus;
             const gameStatusText = game.gameStatusText;
+            const period = game.period;
+            const series = game.seriesText;
 
-            if (gameStatus === 2) {
-                console.log(`${homeTeam} vs ${awayTeam}`);
-                console.log(`Current Score: ${homeTeam} ${homeScore} - ${awayTeam} ${awayScore}`);
-                console.log(`Status: ${gameStatusText}`);
-            } else {
+            if (gameStatus === 1) {
                 console.log(`${homeTeam} vs ${awayTeam}`);
                 console.log(`Scheduled Start: ${gameStatusText}`);
+                console.log(`Series: ${series}`);
+            }
+            else if (gameStatus === 2) {
+                console.log(`${homeTeam} vs ${awayTeam}`);
+                console.log(`Current Score: ${homeTeam} ${homeScore} - ${awayTeam} ${awayScore}`);
+                console.log(`Period: ${period}`);
+                console.log(`Series: ${series}`);
+            } else {
+                console.log(`${homeTeam} vs ${awayTeam}`);
+                console.log(`Final Score: ${homeTeam} ${homeScore} - ${awayTeam} ${awayScore}`);
+                console.log(`Series: ${series}`);
             }
             
             console.log('---------------------------');
