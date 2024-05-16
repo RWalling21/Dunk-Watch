@@ -58,6 +58,8 @@ class dunkWatchAPI  {
         const scoreboard = await this.fetchScoreboard();
         const games = scoreboard.games;
         
+        console.log('---------------------------');
+        
         games.forEach(game => {
             const homeTeam = game.homeTeam.teamName;
             const homeScore = game.homeTeam.score;
