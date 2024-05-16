@@ -8,6 +8,7 @@ Dunk Watch prides itself on not relying on expensive external API's while still 
 1. Clone the repository:
     ```bash
     git clone https://github.com/RWalling21/Dunk-Watch.git
+
     cd Dunk-Watch
     ```
 
@@ -20,14 +21,14 @@ Simple as that!
 
 ## Usage
 
-Currently Dunk Watch is in early alpha and acts as an API. Soon Dunk Watch will be updated as a easy to use command line tool. Please check back for updates! 
+Currently Dunk Watch is in early alpha and acts as an API. Soon Dunk Watch will be updated to a command line tool. Please check back for updates! 
 
-### Fetch Current Games
+### Print current scoreboard
 
-Fetch games today with real time scores
+Print out the current score
 
 ```javascript
 const DunkWatchAPI = require('./dunkWatch.js');
 const dunkWatchAPI = new DunkWatchAPI();
 
-dunkWatchAPI.currentScore();
+dunkWatchAPI.printScoreboard();
