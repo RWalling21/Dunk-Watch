@@ -2,7 +2,6 @@ const { program } = require('commander');
 const DunkWatchAPI = require('./dunkWatch.js');
 
 const dunkWatchAPI = new DunkWatchAPI();
-const scoreboard = dunkWatchAPI.fetchScoreboard()
 
 program
     .name('dunk-watch')
@@ -16,7 +15,19 @@ program.parse(process.argv);
 
 const options = program.opts();
 
-if (options.all) dunkWatchAPI.printScoreboard(scoreboard);
-if (options.slim) console.log("Slim Endpoint");
-if (options.current) console.log("Current Endpoint");
+(async () => {
+    try {
+        if (options.all) {
+            await dunkWatchAPI.printScoreboard({ all: true });
+        } else if (options.slim) {
+            await dunkWatchAPI.printScoreboard({ slim: true });
+        } else if (options.current) {
+            await dunkWatchAPI.printScoreboard({ current: true });
+        } else {
+            await dunkWatchAPI.printScoreboard({});
+        }
+    } catch (error) {
+        console.error('Error printing scoreboard:', error);
+    }
+})();
         

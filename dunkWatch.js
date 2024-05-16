@@ -54,7 +54,7 @@ class dunkWatchAPI  {
     /**
      * Prints a formatted scoreboard to the command line.
      */
-    async printScoreboard() {
+    async printScoreboard(options = {}) {
         const scoreboard = await this.fetchScoreboard();
         const games = scoreboard.games;
         
@@ -72,19 +72,43 @@ class dunkWatchAPI  {
             const periods = {1: '1st', 2: '2nd', 3: '3rd', 4: '4th'}
             const period = game.period;
 
-            if (gameStatus === 1) {
-                console.log(`${homeTeam} vs ${awayTeam}`);
-                console.log(`Scheduled Start: ${gameStatusText}`);
-                console.log(`Series: ${series}`);
+            if (options.current && gameStatus !== 2) {
+                return; // Skip non-current games if --current option is used
             }
-            else if (gameStatus === 2) {
+
+            if (options.slim) {
                 console.log(`${homeTeam} vs ${awayTeam}`);
-                console.log(`Current Score: ${homeTeam} ${homeScore} - ${awayTeam} ${awayScore} | ${periods[period]} period`);
-                console.log(`Series: ${series}`);
-            } else {
+                if (gameStatus === 1) {
+                    console.log(`Scheduled Start: ${gameStatusText}`);
+                }
+                else if (gameStatus === 2) {
+                    console.log(`Current Score: ${homeTeam} ${homeScore} - ${awayTeam} ${awayScore}`);
+                } else {
+                    console.log(`Final Score: ${homeTeam} ${homeScore} - ${awayTeam} ${awayScore}`);
+                }
+            } else if (options.all) {
+                if (gameStatus === 1) {
+                    console.log(`${homeTeam} vs ${awayTeam}`);
+                    console.log(`Scheduled Start: ${gameStatusText}`);
+                    console.log(`Series: ${series}`);
+                } else if (gameStatus === 2) {
+                    console.log(`${homeTeam} vs ${awayTeam}`);
+                    console.log(`Current Score: ${homeTeam} ${homeScore} - ${awayTeam} ${awayScore} | ${periods[period]} period`);
+                    console.log(`Series: ${series}`);
+                } else {
+                    console.log(`${homeTeam} vs ${awayTeam}`);
+                    console.log(`Final Score: ${homeTeam} ${homeScore} - ${awayTeam} ${awayScore}`);
+                    console.log(`Series: ${series}`);
+                }
+            } else if (options.current) {
                 console.log(`${homeTeam} vs ${awayTeam}`);
-                console.log(`Final Score: ${homeTeam} ${homeScore} - ${awayTeam} ${awayScore}`);
-                console.log(`Series: ${series}`);
+                if (gameStatus === 1) {
+                    console.log(`Scheduled Start: ${gameStatusText}`);
+                } else if (gameStatus === 2) {
+                    console.log(`Current Score: ${homeTeam} ${homeScore} - ${awayTeam} ${awayScore}`);
+                } else {
+                    console.log(`Final Score: ${homeTeam} ${homeScore} - ${awayTeam} ${awayScore}`);
+                }
             }
             
             console.log('---------------------------');
