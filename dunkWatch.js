@@ -67,8 +67,10 @@ class dunkWatchAPI  {
             const awayScore = game.awayTeam.score;
             const gameStatus = game.gameStatus;
             const gameStatusText = game.gameStatusText;
-            const period = game.period;
             const series = game.seriesText;
+
+            const periods = {1: "1st", 2: "2nd", 3: "3rd", 4: "4th"}
+            const period = game.period;
 
             if (gameStatus === 1) {
                 console.log(`${homeTeam} vs ${awayTeam}`);
@@ -77,8 +79,7 @@ class dunkWatchAPI  {
             }
             else if (gameStatus === 2) {
                 console.log(`${homeTeam} vs ${awayTeam}`);
-                console.log(`Current Score: ${homeTeam} ${homeScore} - ${awayTeam} ${awayScore}`);
-                console.log(`Period: ${period}`);
+                console.log(`Current Score: ${homeTeam} ${homeScore} - ${awayTeam} ${awayScore} | ${periods[period]} period`);
                 console.log(`Series: ${series}`);
             } else {
                 console.log(`${homeTeam} vs ${awayTeam}`);
