@@ -18,13 +18,13 @@ class dunkWatchAPI  {
     }
 
     /**
-     * Fetches current games and their scoreboard
+     * Fetches current scoreboards
      * 
      * @throws {Error} - Throws an error if there is an issue with the API request.
      */
     async fetchCurrentScoreboard() {
         try {
-            // Pull current scoreboard data from nba.com
+            // Endpoint scraped from nba.com
             const endpoint = 'https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json';
 
             const response = await this.apiInstance.get(endpoint);
@@ -33,17 +33,6 @@ class dunkWatchAPI  {
         } catch (error) {
             console.error(`Error fetching data:`, error);
         }
-    }
-
-    /**
-     * Prints a formatted scoreboard to the command line.
-     */
-    async printScoreboard(options = {}) {
-        await this.fetchCurrentScoreboard();
-        
-        const games = this.scoreboard.games;
-        
-        
     }
 }
 

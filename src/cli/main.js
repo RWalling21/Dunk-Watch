@@ -1,5 +1,5 @@
 const { program } = require('commander');
-const DunkWatchAPI = require('./dunkWatch.js');
+const DunkWatchAPI = require('../api/dunkWatch.js');
 
 const dunkWatchAPI = new DunkWatchAPI();
 
@@ -17,7 +17,6 @@ const options = program.opts();
 
 (async () => {
     try {
-        await dunkWatchAPI.fetchScoreboard();
         if (options.all) {
             await dunkWatchAPI.printScoreboard({ all: true });
         } else if (options.slim) {
