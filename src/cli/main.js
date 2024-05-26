@@ -1,5 +1,6 @@
 const { program } = require('commander');
 const DunkWatchAPI = require('../api/dunkWatch.js');
+const GameProcessor = require('../data/processor.js')
 
 const dunkWatchAPI = new DunkWatchAPI();
 
@@ -12,22 +13,15 @@ program
     .option('-c, --current', 'Only display current games')
 
 program.parse(process.argv);
-
 const options = program.opts();
 
 (async () => {
     try {
-        if (options.all) {
-            await dunkWatchAPI.printScoreboard({ all: true });
-        } else if (options.slim) {
-            await dunkWatchAPI.printScoreboard({ slim: true });
-        } else if (options.current) {
-            await dunkWatchAPI.printScoreboard({ current: true });
-        } else {
-            await dunkWatchAPI.printScoreboard({});
-        }
+        const scoreboard = await dunkWatchAPI.fetchCurrentScoreboard();
+        const games = GameProcessor.processGames(scoreboard);
+        console.log(games);
     } catch (error) {
-        console.error('Error printing scoreboard:', error);
+        console.error('DunkWatch Error: ', error)
     }
 })();
         

@@ -6,7 +6,6 @@ class dunkWatchAPI  {
      */
     constructor() {
         this.apiInstance = axios.create({});
-        this.scoreboard;
     }
 
     /**
@@ -29,7 +28,7 @@ class dunkWatchAPI  {
 
             const response = await this.apiInstance.get(endpoint);
 
-            this.scoreboard = response.data.scoreboard;
+            return response.data.scoreboard;
         } catch (error) {
             console.error(`Error fetching data:`, error);
         }
