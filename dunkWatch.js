@@ -6,6 +6,7 @@ class dunkWatchAPI  {
      */
     constructor() {
         this.apiInstance = axios.create({});
+        this.scoreboard;
     }
 
     /**
@@ -17,99 +18,32 @@ class dunkWatchAPI  {
     }
 
     /**
-     * Handles a generic API request
-     * @param {string} endpoint - The API endpoint.
-     * @param {Object} params - The query parameters.
-     * @returns {Promise<Object>} - The API response data.
-     * @throws {Error} - Throws an error if there is an issue with the API request.
-     */
-    async handleRequest(endpoint, params = {}) {
-        try {
-            const response = await this.apiInstance.get(endpoint, { params });
-            return response;
-        } catch (error) {
-            console.error(`Error fetching data from ${endpoint}:`, error);
-            return null;
-        }
-    }
-
-    /**
-     * Fetches current games and their score
+     * Fetches current games and their scoreboard
      * 
-     * @returns {JSON} - Returns the scoreboard object in JSON format
      * @throws {Error} - Throws an error if there is an issue with the API request.
      */
-    async fetchScoreboard() {
-        // Pull current scoreboard data from nba.com
-        const endpoint = 'https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json';
+    async fetchCurrentScoreboard() {
+        try {
+            // Pull current scoreboard data from nba.com
+            const endpoint = 'https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json';
 
-        const response = await this.apiInstance.get(endpoint);
-        
-        return response.data.scoreboard;
+            const response = await this.apiInstance.get(endpoint);
+
+            this.scoreboard = response.data.scoreboard;
+        } catch (error) {
+            console.error(`Error fetching data:`, error);
+        }
     }
 
     /**
      * Prints a formatted scoreboard to the command line.
      */
     async printScoreboard(options = {}) {
-        const scoreboard = await this.fetchScoreboard();
-        const games = scoreboard.games;
+        await this.fetchCurrentScoreboard();
         
-        console.log('---------------------------');
+        const games = this.scoreboard.games;
         
-        games.forEach(game => {
-            const homeTeam = game.homeTeam.teamName;
-            const homeScore = game.homeTeam.score;
-            const awayTeam = game.awayTeam.teamName;
-            const awayScore = game.awayTeam.score;
-            const gameStatus = game.gameStatus;
-            const gameStatusText = game.gameStatusText;
-            const series = game.seriesText;
-
-            const periods = {1: '1st', 2: '2nd', 3: '3rd', 4: '4th'}
-            const period = game.period;
-
-            if (options.current && gameStatus !== 2) {
-                return; // Skip non-current games if --current option is used
-            }
-
-            if (options.slim) {
-                console.log(`${homeTeam} vs ${awayTeam}`);
-                if (gameStatus === 1) {
-                    console.log(`Scheduled Start: ${gameStatusText}`);
-                }
-                else if (gameStatus === 2) {
-                    console.log(`Current Score: ${homeTeam} ${homeScore} - ${awayTeam} ${awayScore}`);
-                } else {
-                    console.log(`Final Score: ${homeTeam} ${homeScore} - ${awayTeam} ${awayScore}`);
-                }
-            } else if (options.all) {
-                if (gameStatus === 1) {
-                    console.log(`${homeTeam} vs ${awayTeam}`);
-                    console.log(`Scheduled Start: ${gameStatusText}`);
-                    console.log(`Series: ${series}`);
-                } else if (gameStatus === 2) {
-                    console.log(`${homeTeam} vs ${awayTeam}`);
-                    console.log(`Current Score: ${homeTeam} ${homeScore} - ${awayTeam} ${awayScore} | ${periods[period]} period`);
-                    console.log(`Series: ${series}`);
-                } else {
-                    console.log(`${homeTeam} vs ${awayTeam}`);
-                    console.log(`Final Score: ${homeTeam} ${homeScore} - ${awayTeam} ${awayScore}`);
-                    console.log(`Series: ${series}`);
-                }
-            } else if (options.current) {
-                console.log(`${homeTeam} vs ${awayTeam}`);
-                if (gameStatus === 1) {
-                    console.log(`Scheduled Start: ${gameStatusText}`);
-                } else if (gameStatus === 2) {
-                    console.log(`Current Score: ${homeTeam} ${homeScore} - ${awayTeam} ${awayScore}`);
-                } else {
-                    console.log(`Final Score: ${homeTeam} ${homeScore} - ${awayTeam} ${awayScore}`);
-                }
-            }
-            
-            console.log('---------------------------');
-        });
+        
     }
 }
 

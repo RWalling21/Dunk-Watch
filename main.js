@@ -17,6 +17,7 @@ const options = program.opts();
 
 (async () => {
     try {
+        await dunkWatchAPI.fetchScoreboard();
         if (options.all) {
             await dunkWatchAPI.printScoreboard({ all: true });
         } else if (options.slim) {
