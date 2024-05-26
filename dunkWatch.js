@@ -1,13 +1,10 @@
 const axios = require('axios');
-const moment = require('moment-timezone');
 
 class dunkWatchAPI  {
     /**
      * @description API Object to fetch live NBA data
-     * @param {*} timeZone [optional] timezone that games are fetched from
      */
-    constructor(timeZone='America/New_York') {
-        this.currDate = moment().tz(timeZone).format('YYYY-MM-DD');
+    constructor() {
         this.apiInstance = axios.create({});
     }
 
