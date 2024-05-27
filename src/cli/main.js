@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import {program} from'commander';
 import DunkWatchAPI from '../api/dunkWatch.js';
 import GameProcessor from '../data/processor.js';
