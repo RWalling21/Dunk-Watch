@@ -34,7 +34,7 @@ const teamColors = {
 };
 
 class Display {
-    static printGames(games) {
+    static printGames(games, options = {}) {
         games.forEach(game => {
             const homeTeamColor = teamColors[game.homeTeam] || { text: '#FFFFFF', highlight: '#000000' };
             const awayTeamColor = teamColors[game.awayTeam] || { text: '#FFFFFF', highlight: '#000000' };
@@ -51,7 +51,7 @@ class Display {
 
             console.log(separator.padEnd(39, '-'));
             console.log(`| ${gameLine.padEnd(35)} |`);
-            console.log(`| ${periodLine.padEnd(35)} |`);
+            if (options.all) console.log(`| ${periodLine.padEnd(35)} |`);
             console.log(separator.padEnd(39, '-'));
             console.log('');
         });
