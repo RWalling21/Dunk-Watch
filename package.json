@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "type": "module",
   "main": "src/cli/main.js",
+  "bin": {
+    "dunk": "./bin/index.js"
+  },
   "scripts": {
     "dunk": "src/cli/main.js",
     "dunkAll": "src/cli/main.js -a"

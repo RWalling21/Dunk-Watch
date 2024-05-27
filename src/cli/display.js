@@ -4,7 +4,7 @@ const teamColors = {
     'Lakers': { text: '#FDB927', highlight: '#552583' },
     'Warriors': { text: '#1D428A', highlight: '#FFC72C' },
     'Nets': { text: '#FFFFFF', highlight: '#000000' },
-    'Celtics': { text: '#007A33', highlight: '#BA9653' },
+    'Celtics': { text: '#009933', highlight: '#FFFFFF' },
     'Hawks': { text: '#E03A3E', highlight: '#C1D32F' },
     'Hornets': { text: '#1D1160', highlight: '#00788C' },
     'Bulls': { text: '#CE1141', highlight: '#000000' },
@@ -13,7 +13,7 @@ const teamColors = {
     'Nuggets': { text: '#0E2240', highlight: '#FEC524' },
     'Pistons': { text: '#C8102E', highlight: '#1D42BA' },
     'Rockets': { text: '#CE1141', highlight: '#000000' },
-    'Pacers': { text: '#002D62', highlight: '#FDBB30' },
+    'Pacers': { text: '#0066ff', highlight: '#FDBB30' },
     'Clippers': { text: '#C8102E', highlight: '#1D42BA' },
     'Grizzlies': { text: '#5D76A9', highlight: '#12173F' },
     'Heat': { text: '#98002E', highlight: '#F9A01B' },
@@ -50,7 +50,7 @@ class Display {
             const periodLine = `${period} period - Series: ${series}`;
 
             console.log(separator.padEnd(39, '-'));
-            console.log(`| ${gameLine.padEnd(35)} |`);
+            console.log(`| ${gameLine.padEnd()} |`);
             if (options.all) console.log(`| ${periodLine.padEnd(35)} |`);
             console.log(separator.padEnd(39, '-'));
             console.log('');
