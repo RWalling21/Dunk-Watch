@@ -21,14 +21,28 @@ Simple as that!
 
 ## Usage
 
-Currently Dunk Watch is in early alpha and acts as an API. Soon Dunk Watch will be updated to a command line tool. Please check back for updates! 
+Dunk watch is a simple CLI tool that displays current NBA scores or upcoming games.
 
 ### Print current scoreboard
 
-Print out the current score
+Print the current score
 
-```javascript
-const DunkWatchAPI = require('./dunkWatch.js');
-const dunkWatchAPI = new DunkWatchAPI();
+```bash
+> dunk
 
-dunkWatchAPI.printScoreboard();
+---------------------------------------
+| Mavericks - 60 vs Timberwolves - 52 |
+---------------------------------------
+
+```
+
+Print the current score with all info
+```bash
+> dunk
+
+---------------------------------------
+| Mavericks - 60 vs Timberwolves - 52 |
+| 2nd period - Series: DAL leads 2-0  |
+---------------------------------------
+
+```
