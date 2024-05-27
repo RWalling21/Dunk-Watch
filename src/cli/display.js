@@ -45,14 +45,11 @@ class Display {
             const period = game.period || 'N/A';
             const series = game.series || 'N/A';
 
-            const separator = '----------';
             const gameLine = `${homeTeam} vs ${awayTeam}`;
             const periodLine = `${period} period - Series: ${series}`;
 
-            console.log(separator.padEnd(39, '-'));
-            console.log(`| ${gameLine.padEnd()} |`);
-            if (options.all) console.log(`| ${periodLine.padEnd(35)} |`);
-            console.log(separator.padEnd(39, '-'));
+            console.log(`${gameLine.padEnd()}`);
+            if (options.all) console.log(`${periodLine.padEnd(35)}`);
             console.log('');
         });
     }
