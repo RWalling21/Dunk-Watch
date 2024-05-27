@@ -1,6 +1,7 @@
-const { program } = require('commander');
-const DunkWatchAPI = require('../api/dunkWatch.js');
-const GameProcessor = require('../data/processor.js')
+import {program} from'commander';
+import DunkWatchAPI from '../api/dunkWatch.js';
+import GameProcessor from '../data/processor.js';
+import Display from './display.js';
 
 const dunkWatchAPI = new DunkWatchAPI();
 
@@ -19,7 +20,7 @@ const options = program.opts();
     try {
         const scoreboard = await dunkWatchAPI.fetchCurrentScoreboard();
         const games = GameProcessor.processGames(scoreboard);
-        console.log(games);
+        Display.printGames(games);
     } catch (error) {
         console.error('DunkWatch Error: ', error)
     }

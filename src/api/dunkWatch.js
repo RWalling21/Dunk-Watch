@@ -1,6 +1,6 @@
-const axios = require('axios');
+import axios from 'axios';
 
-class dunkWatchAPI  {
+class DunkWatchAPI  {
     /**
      * @description API Object to fetch live NBA data
      */
@@ -35,4 +35,4 @@ class dunkWatchAPI  {
     }
 }
 
-module.exports = dunkWatchAPI;
+export default DunkWatchAPI;

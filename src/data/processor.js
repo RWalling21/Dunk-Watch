@@ -1,4 +1,4 @@
-const Game = require('../models/game')
+import Game from '../models/game.js';
 
 /**
  * Maps the fetched data to game objects
@@ -18,4 +18,4 @@ class GameProcessor {
     }
 }
 
-module.exports = GameProcessor;
+export default GameProcessor;
