@@ -38,7 +38,7 @@ Print the current score
 
 Print the current score with all info
 ```bash
-> dunk
+> dunk -a
 
 ---------------------------------------
 | Mavericks - 60 vs Timberwolves - 52 |
